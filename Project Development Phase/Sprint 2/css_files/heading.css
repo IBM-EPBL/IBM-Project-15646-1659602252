@@ -1,0 +1,72 @@
+.hero {
+    height: 85vh;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .main-text h1 {
+    font-size: 80px;
+    background: linear-gradient(310deg, #d31027, #ea384d);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 500;
+    font-family: 'Fredoka One', cursive;
+
+  }
+  .main-text h3 {
+    font-size: 60px;
+    letter-spacing: 24px;
+    color: #ffffff;
+    font-weight: 100;
+  }
+
+  .main-text h4 {
+    margin-top: 5px;
+    color: #d9d9d9b6;
+    font-size: 28px;
+  }
+
+  .main-text {
+    position: absolute;
+    top: 50%;
+    left: 34%;
+    transform: translate(0, -50%);
+    animation: heading-ltr 1s ease-out;
+  }
+  .btns {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .hero-btn1 {
+    background: linear-gradient(310deg, #d31027, #ea384d);
+    display: inline-block;
+    padding: 10px 30px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 30px;
+    transition: all 0.5s 0s ease;
+    font-variant: small-caps;
+    font-size: 20px;
+    text-align: center;
+  }
+  .hero-btn2 {
+    background-color: #ffffff;
+    color: #d31027;
+    display: inline-block;
+    padding: 10px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 30px;
+    transition: all 0.5s 0s ease;
+    font-variant: small-caps;
+    font-size: 20px;
+    text-align: center;
+  }
+  .hero-btn:hover {
+    color: #ffffff;
+    /* box-shadow: 9px 9px 24px #d9d9d9; */
+    transform: translateY(-5px);
+  }
