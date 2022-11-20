@@ -164,6 +164,7 @@ def isHyphenPresent() -> int:
 # 7. Sub Domain and Multi Sub Domains
 def subDomain() -> int:
     try:
+        modifiedUrl = url 
         if ( "www." in url ):
             modifiedUrl = url.replace("www.", "")
         
@@ -186,6 +187,7 @@ def subDomain() -> int:
         print("7. Success")
         return -1
     except:
+        traceback.print_exc()
         print("7. Fail")
         return 0
 
@@ -210,6 +212,9 @@ def domainRegistrationLength() -> int:
         creationDate = whoisResponse.creation_date
         expirationDate = whoisResponse.expiration_date
 
+        if( (creationDate is None) or (expirationDate is None) ):
+            return -1
+
         try:
             if(creationDate):
                 creationDate = creationDate[0]
@@ -233,7 +238,8 @@ def domainRegistrationLength() -> int:
     except:
         traceback.print_exc()
         print("9. Fail")
-        return -1
+        return 0
+        # return -1
 
 # 10. Using Non-Standard Port
 def isUsingNonStdPort() -> int:
@@ -524,6 +530,7 @@ def ageOfDomain() -> int:
         print("21. Success")
         return -1
     except:
+        traceback.print_exc()
         print("21. Fail")
         return 0
         # return -1
@@ -563,8 +570,16 @@ def websiteTraffic() -> int:
 # 24. PageRank
 def pageRank() -> int:
     try:
-        checkerResponse = requests.post("https://www.checkpagerank.net/index.php", {"name": getDomainName()})
-        globalRank = int(re.findall(r"Global Rank: ([0-9]+)", checkerResponse.text)[0])
+        checkerResponse = requests.post(
+            url = "https://www.checkpagerank.net/index.php", 
+            data = {"name": getDomainName()},
+            timeout = 10)
+        result = re.findall(r"Global Rank: ([0-9]+)", checkerResponse.text)
+        if(not result):
+            print("24. Success")
+            return -1
+        else:
+            globalRank = int(result[0])
         if ( 0 < globalRank < 100000 ):
             print("24. Success")
             return 1
