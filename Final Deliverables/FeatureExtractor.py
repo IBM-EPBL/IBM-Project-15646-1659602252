@@ -346,7 +346,6 @@ def URLOfAnchor() -> int:
             i += 1
 
         try:
-            #TODO always percentage is 100. Have to check
             percentage = unsafe / float(i) * 100
             if percentage < 31.0:
                 print("13. Success")
@@ -434,9 +433,7 @@ def serverFormHandler():
 
 # 16. Submitting Information to Email
 def submittingInfoToEmail():
-    #TODO wrong
     try:
-        #TODO pattern thappu
         if ( re.findall(r"mail\(\)|mailto:?", str(getSoupObject())) ):
             print("16. Success")
             return -1
@@ -450,7 +447,7 @@ def submittingInfoToEmail():
         return 0
 
 # 17. Abnormal URL
-def isAbnormalURL(): #wrong
+def isAbnormalURL():
     try:
         if (requests.get(url)).text == whois.whois(getDomainName()):
             print("17. Success")
@@ -495,7 +492,7 @@ def statusBarCustomization():
         # return -1
 
 # 20. Disabling Right Click
-def isRightClickDisabled(): #wrong
+def isRightClickDisabled():
     try:
         if re.findall(
             r"event.button ?== ?2",
@@ -612,7 +609,7 @@ def googleIndex() -> int:
         # return -1
 
 # 26. Number of Links Pointing to Page
-def linksPointingToPage() -> int: # Wrong
+def linksPointingToPage() -> int:
     try:
         noOfLinks = len(re.findall(r"<a href=", requests.get(url).text))
         if noOfLinks == 0:

@@ -164,6 +164,7 @@ def isHyphenPresent() -> int:
 # 7. Sub Domain and Multi Sub Domains
 def subDomain() -> int:
     try:
+        modifiedUrl = url 
         if ( "www." in url ):
             modifiedUrl = url.replace("www.", "")
         
@@ -186,6 +187,7 @@ def subDomain() -> int:
         print("7. Success")
         return -1
     except:
+        traceback.print_exc()
         print("7. Fail")
         return 0
 
@@ -210,6 +212,9 @@ def domainRegistrationLength() -> int:
         creationDate = whoisResponse.creation_date
         expirationDate = whoisResponse.expiration_date
 
+        if( (creationDate is None) or (expirationDate is None) ):
+            return -1
+
         try:
             if(creationDate):
                 creationDate = creationDate[0]
@@ -233,7 +238,8 @@ def domainRegistrationLength() -> int:
     except:
         traceback.print_exc()
         print("9. Fail")
-        return -1
+        return 0
+        # return -1
 
 # 10. Using Non-Standard Port
 def isUsingNonStdPort() -> int:
@@ -340,7 +346,6 @@ def URLOfAnchor() -> int:
             i += 1
 
         try:
-            #TODO always percentage is 100. Have to check
             percentage = unsafe / float(i) * 100
             if percentage < 31.0:
                 print("13. Success")
@@ -428,9 +433,7 @@ def serverFormHandler():
 
 # 16. Submitting Information to Email
 def submittingInfoToEmail():
-    #TODO wrong
     try:
-        #TODO pattern thappu
         if ( re.findall(r"mail\(\)|mailto:?", str(getSoupObject())) ):
             print("16. Success")
             return -1
@@ -444,7 +447,7 @@ def submittingInfoToEmail():
         return 0
 
 # 17. Abnormal URL
-def isAbnormalURL(): #wrong
+def isAbnormalURL():
     try:
         if (requests.get(url)).text == whois.whois(getDomainName()):
             print("17. Success")
@@ -489,7 +492,7 @@ def statusBarCustomization():
         # return -1
 
 # 20. Disabling Right Click
-def isRightClickDisabled(): #wrong
+def isRightClickDisabled():
     try:
         if re.findall(
             r"event.button ?== ?2",
@@ -524,6 +527,7 @@ def ageOfDomain() -> int:
         print("21. Success")
         return -1
     except:
+        traceback.print_exc()
         print("21. Fail")
         return 0
         # return -1
@@ -563,8 +567,16 @@ def websiteTraffic() -> int:
 # 24. PageRank
 def pageRank() -> int:
     try:
-        checkerResponse = requests.post("https://www.checkpagerank.net/index.php", {"name": getDomainName()})
-        globalRank = int(re.findall(r"Global Rank: ([0-9]+)", checkerResponse.text)[0])
+        checkerResponse = requests.post(
+            url = "https://www.checkpagerank.net/index.php", 
+            data = {"name": getDomainName()},
+            timeout = 10)
+        result = re.findall(r"Global Rank: ([0-9]+)", checkerResponse.text)
+        if(not result):
+            print("24. Success")
+            return -1
+        else:
+            globalRank = int(result[0])
         if ( 0 < globalRank < 100000 ):
             print("24. Success")
             return 1
@@ -597,7 +609,7 @@ def googleIndex() -> int:
         # return -1
 
 # 26. Number of Links Pointing to Page
-def linksPointingToPage() -> int: # Wrong
+def linksPointingToPage() -> int:
     try:
         noOfLinks = len(re.findall(r"<a href=", requests.get(url).text))
         if noOfLinks == 0:
